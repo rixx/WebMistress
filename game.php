@@ -36,11 +36,14 @@ $playernum = ($row['p1name'] == $_SESSION['nick']) ? '1' : '2';
 
 if ($row['finished'] == 'true') {
 
-if ($playernum == $row['turn']) {
-    echo "you lost";
-} else {
-    echo "you WIN";
-}
+    if ($playernum == $row['turn']) {
+        echo "you lost";
+    } else {
+        echo "you WIN";
+    }
+
+    echo "<a href=\"viergewinnt.php\"><br />back</a>";
+
 } else {
 
     $spielfeld = json_decode($row['spielfeld']);
@@ -58,16 +61,19 @@ if ($playernum == $row['turn']) {
                 echo "<img src=\"4g.png\"/></td>";
             }
         }
-        echo "</tr>";
-    }
+       echo "</tr>";
+   }
+   echo "</table>";
+
+   echo "<a href=\"giveup.php\">Give up</a>";
+
+
 }
+
 
 mysql_close();
 
 ?>
-</table> 
-
-
 
 </body>
 </html>
