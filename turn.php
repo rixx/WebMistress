@@ -59,19 +59,34 @@ if (!$link) {
         mysql_query($query);
        
     }
+    
+    test_win($spielfeld, $column, $i);
+    header('Location: game.php');
 
 
-    $vertical = 1;
+function test_win($spielfeld, $column, $row) {
+
+    test_vertical($spielfeld, $column, $row);
+    test_horizontal($spielfeld, $column, $row);
+    test_diagonal_left($spielfeld, $column, $row);
+    test_diagonal_right($spielfeld, $column, $row);
+
     $horizontal = 1;
     $diagonal_left = 1;
     $diagonal_right = 1;
+}
 
-    //test for vertical first, only go down
-    if ($i <= 2) {
-        $j = $i+1;
+function test_vertical($spielfeld, $column, $row) {
+
+    $vertical = 1;
+
+    if ($row <= 2) {
+        $j = $row+1;
+
         while ($vertical > 0 && $vertical < 4) {
             if ((int)$spielfeld[$j][$column] == $value) {
                 $vertical++;
+                $j++;
             } else {
                 $vertical = 0;
             }
@@ -81,12 +96,14 @@ if (!$link) {
             won();
         }
     }
+}
 
-    //test horizontal
+function test_horizontal($spielfeld, $column, $row) {
+    $horizontal = 1; 
     $c = $column - 1;
 
     while ($c >= 0) {
-        if ((int)$spielfeld[$i][$c] == $value) {
+        if ((int)$spielfeld[$row][$c] == $value) {
             $horizontal++;
         } else {
             break;
@@ -97,7 +114,8 @@ if (!$link) {
     $c = $column + 1;
 
     while ($c < 7) {
-        if ((int)$spielfeld[$i][$z] == $value) {
+
+        if ((int)$spielfeld[$row][$c] == $value) {
             $horizontal++;
         } else {
             break;
@@ -106,11 +124,79 @@ if (!$link) {
     }
 
     if ($horizontal >= 4) {
-        won()
+        won();
+    }
+}
+
+function test_diagonal_left($spielfeld, $column, $row) {
+        
+    $diagonal_left = 1;
+    $c = $column -1;
+    $r = $row - 1;
+
+    while ($c >= 0 && $r >= 0) {
+        if ((int)$spielfeld[$r][$c] == $value) {
+            $diagonal_left++;
+            $c--;
+            $r--;
+        }else break;
     }
 
-        
+    $c = $column + 1;
+    $r = $row + 1;
+    while ($c < 7 && $r < 6) {
+        if ((int)$spielfeld[$r][$c] == $value)  {
+            $diagonal_left++;
+            $c++;
+            $r++;
+        } else break;
+    }
+
+    if ($diagonal_left >= 4) {
+        win();
+    }
+}
+
+
+function test_diagonal_right($spielfeld, $column, $row) {
+    
+    $diagonal_right = 1;
+    $c = $column + 1;
+    $r = $row - 1;
+
+    while ($c >= 0 && $r >= 0) {
+        if ((int)$spielfeld[$r][$c] == $value) {
+            $diagonal_right++;
+            $c++;
+            $r--;
+        }else break;
+    }
+
+    $c = $column - 1;
+    $r = $row + 1;
+    while ($c < 7 && $r < 6) {
+        if ((int)$spielfeld[$r][$c] == $value)  {
+            $diagonal_right++;
+            $c--;
+            $r++;
+        } else break;
+    }
+
+    if ($diagonal_right >= 4) {
+        win();
+    }
+
+}
+
+
+function win() {
+
+    $query = sprintf("update game set finished='true' where id='%s'",$_SESSION['gameid']);
+    mysql_query($query);
 
     header('Location: game.php');
+}
+
+
 ?>
 
