@@ -32,14 +32,9 @@ if (!$link) {
         if (0 == (int)$spielfeld[$i][$column]) {
             break;
         } 
-
         $i--;
 
     }
-
-
-    $bla = array_fill(0,5,array_fill(0,6,array_fill(0,4,0));    
-
 
 
     if ($i >= 0) {
@@ -60,6 +55,7 @@ if (!$link) {
        
     }
     
+
     test_win($spielfeld, $column, $i);
     header('Location: game.php');
 
@@ -70,15 +66,12 @@ function test_win($spielfeld, $column, $row) {
     test_horizontal($spielfeld, $column, $row);
     test_diagonal_left($spielfeld, $column, $row);
     test_diagonal_right($spielfeld, $column, $row);
-
-    $horizontal = 1;
-    $diagonal_left = 1;
-    $diagonal_right = 1;
 }
 
 function test_vertical($spielfeld, $column, $row) {
 
     $vertical = 1;
+    global $value;
 
     if ($row <= 2) {
         $j = $row+1;
@@ -93,7 +86,7 @@ function test_vertical($spielfeld, $column, $row) {
         }
 
         if ($vertical = 4) {
-            won();
+            win();
         }
     }
 }
@@ -101,6 +94,7 @@ function test_vertical($spielfeld, $column, $row) {
 function test_horizontal($spielfeld, $column, $row) {
     $horizontal = 1; 
     $c = $column - 1;
+    global $value;
 
     while ($c >= 0) {
         if ((int)$spielfeld[$row][$c] == $value) {
@@ -124,13 +118,14 @@ function test_horizontal($spielfeld, $column, $row) {
     }
 
     if ($horizontal >= 4) {
-        won();
+        win();
     }
 }
 
 function test_diagonal_left($spielfeld, $column, $row) {
         
     $diagonal_left = 1;
+    global $value;
     $c = $column -1;
     $r = $row - 1;
 
@@ -161,6 +156,7 @@ function test_diagonal_left($spielfeld, $column, $row) {
 function test_diagonal_right($spielfeld, $column, $row) {
     
     $diagonal_right = 1;
+    global $value;
     $c = $column + 1;
     $r = $row - 1;
 
@@ -195,6 +191,7 @@ function win() {
     mysql_query($query);
 
     header('Location: game.php');
+    exit();
 }
 
 
