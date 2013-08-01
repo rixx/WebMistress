@@ -43,7 +43,7 @@
        header('Location: game.php');
 
     } else {
-        $query = sprintf("select game.name as gamename, p1.name as p1name, p2.name as p2name
+        $query = sprintf("select game.id, game.name as gamename, p1.name as p1name, p2.name as p2name
                       from game left join player p1 on game.player1=p1.id 
                           left join player p2 on game.player2=p2.id 
                       where game.finished='false'
@@ -54,7 +54,7 @@
 
         while ($row = mysql_fetch_assoc($result)) {
             
-            echo $row['gamename']." (".$row['p1name'].$row['p2name'].")<br>";
+            echo "<a href=\"join.php?id=".$row['id']."\">".$row['gamename']." (".$row['p1name'].$row['p2name'].")</a><br>";
 
         }
 
