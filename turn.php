@@ -37,14 +37,21 @@ if (!$link) {
 
     }
 
+
+    $bla = array_fill(0,5,array_fill(0,6,array_fill(0,4,0));    
+
+
+
     if ($i >= 0) {
 
         if ($row['p1name'] == $_SESSION['nick']) {
-            $spielfeld[$i][$column] = 1;
+            $value = 1;
+            $spielfeld[$i][$column] = $value;
             $turn = '2';
 
         } else if ($row['p2name'] = $_SESSION['nick']) {
-            $spielfeld[$i][$column] = 2;
+            $value = 2;
+            $spielfeld[$i][$column] = $value;
             $turn = '1';
         }
 
@@ -52,6 +59,57 @@ if (!$link) {
         mysql_query($query);
        
     }
+
+
+    $vertical = 1;
+    $horizontal = 1;
+    $diagonal_left = 1;
+    $diagonal_right = 1;
+
+    //test for vertical first, only go down
+    if ($i <= 2) {
+        $j = $i+1;
+        while ($vertical > 0 && $vertical < 4) {
+            if ((int)$spielfeld[$j][$column] == $value) {
+                $vertical++;
+            } else {
+                $vertical = 0;
+            }
+        }
+
+        if ($vertical = 4) {
+            won();
+        }
+    }
+
+    //test horizontal
+    $c = $column - 1;
+
+    while ($c >= 0) {
+        if ((int)$spielfeld[$i][$c] == $value) {
+            $horizontal++;
+        } else {
+            break;
+        }
+        $c--;
+    }
+
+    $c = $column + 1;
+
+    while ($c < 7) {
+        if ((int)$spielfeld[$i][$z] == $value) {
+            $horizontal++;
+        } else {
+            break;
+        }
+        $c++;
+    }
+
+    if ($horizontal >= 4) {
+        won()
+    }
+
+        
 
     header('Location: game.php');
 ?>
