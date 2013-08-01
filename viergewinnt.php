@@ -43,6 +43,7 @@
        header('Location: game.php');
 
     } else {
+        echo "<a href=\"startgame.php\">Start new game</a><br />";
         $query = sprintf("select game.id, game.name as gamename, p1.name as p1name, p2.name as p2name
                       from game left join player p1 on game.player1=p1.id 
                           left join player p2 on game.player2=p2.id 
