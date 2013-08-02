@@ -3,7 +3,8 @@
 
 <?php
 
-session_start();
+    header('Content-Type: application/json');
+    session_start();
 
 $link = mysql_connect('127.0.0.1', 'rix', 'blakeks');
 
@@ -14,12 +15,24 @@ if (!$link) {
 
     $db = mysql_select_db("viergewinnt",$link);
     
-    $query = sprintf("select p1.name as p1name, p2.name as p2name, game.spielfeld
+    $query = sprintf("select p1.name as p1name, p2.name as p2name, game.spielfeld, game.finished, game.turn
                       from game left join player p1 on game.player1 = p1.id 
                         left join player p2 on game.player2 = p2.id
                       where game.id='%s'",$_SESSION['gameid']);
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);
+
+
+    if ($_SESSION['nick'] == $row['p1name']) {
+        $whoami = '1';
+    } else $whoami = '2';
+
+
+    if ($row['finished' == 'true') {
+        echo '{"error": "Game is already over."}';
+    } else if ($whoami != $row['turn']) {
+        echo '{"error": "Not your turn."}';
+    } else {
     
     $spielfeld = json_decode($row['spielfeld']);
     
@@ -57,8 +70,8 @@ if (!$link) {
     
 
     test_win($spielfeld, $column, $i);
-    header('Location: game.php');
-
+    echo '{"board": '.json_encode($spielfeld).', "finished": false}';
+}
 
 function test_win($spielfeld, $column, $row) {
 
@@ -190,7 +203,7 @@ function win() {
     $query = sprintf("update game set finished='true' where id='%s'",$_SESSION['gameid']);
     mysql_query($query);
 
-    header('Location: game.php');
+    echo '{"board": '.json_encode($spielfeld).', "finished": true}';
     exit();
 }
 

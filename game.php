@@ -1,18 +1,6 @@
 <?php include('auth.php'); ?>
-<html>
-
-<head>
-<meta http-equiv="refresh" content="3">
-</head>
-
-
-<body>
-
-<table border="0" cellspacing="0" cellpadding="0">
-
 
 <?php
-$colorarr=array("red","blue","green","yellow","white","black");
 
 session_start();
 
@@ -34,46 +22,53 @@ $row = mysql_fetch_assoc($result);
 
 $playernum = ($row['p1name'] == $_SESSION['nick']) ? '1' : '2';
 
-if ($row['finished'] == 'true') {
-
-    if ($playernum == $row['turn']) {
-        echo "you lost";
-    } else {
-        echo "you WIN";
-    }
-
-    echo "<a href=\"viergewinnt.php\"><br />back</a>";
-
-} else {
-
-    $spielfeld = json_decode($row['spielfeld']);
-    $colors = array("white",$row['color1'],$row['color2']);
-
-
-    for ($i = 0; $i < 6; $i++) {
-        echo "<tr height=\"80\">";
-        for ($j = 0; $j < 7; $j++) {
-            echo "<td width=\"80\" bgcolor=\"".$colors[(int)$spielfeld[$i][$j]]."\">";
-            
-            if ($playernum == $row['turn']) {
-                echo "<a href=\"turn.php?column=". $j . "\"><img src=\"4g.png\"></a></td>";
-            } else {
-                echo "<img src=\"4g.png\"/></td>";
-            }
-        }
-       echo "</tr>";
-   }
-   echo "</table>";
-
-   echo "<a href=\"giveup.php\">Give up</a>";
-
-
-}
-
-
 mysql_close();
 
 ?>
+<html>
 
+<head>
+<script src="jquery.js"></script>
+<script>
+
+    gameState = <?=$row['spielfeld'] ?>;
+
+    players = { player1:
+                { name: "<?=$row['p1name']?>",
+                  color: "<?=$row['color1']?>" },
+                player2:
+                { name: "<?=$row['p2name']?>",
+                  color: "<?=$row['color2']?>" } };
+
+    gameName = "<?=$row['gamename']?>";
+    whoami = <?=$playernum?>;
+    activePlayer = <?=$row['turn']?>;
+                 
+
+</script>
+<script src="game.js"></script>
+</head>
+
+
+<body>
+
+<svg height="480" width="560">
+
+    <defs>
+        <mask id="token-holes">
+            <rect width="560" height="480" fill="white" />
+        </mask>
+    </defs>
+    <g id="board">
+        <rect width="560" height="480" fill="blue" mask="url(#token-holes)" />
+
+    </g>
+
+
+    <g id="tokens">
+
+    </g>
+
+</svg>
 </body>
 </html>
