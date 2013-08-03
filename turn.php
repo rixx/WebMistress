@@ -28,7 +28,7 @@ if (!$link) {
     } else $whoami = '2';
 
 
-    if ($row['finished' == 'true') {
+    if ($row['finished'] == 'true') {
         echo '{"error": "Game is already over."}';
     } else if ($whoami != $row['turn']) {
         echo '{"error": "Not your turn."}';

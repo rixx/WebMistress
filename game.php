@@ -70,5 +70,7 @@ mysql_close();
     </g>
 
 </svg>
+<p><a href="giveup.php">I give up!</a></p>
+<p><a href="logout.php">I give up and want to log out!</a></p>
 </body>
 </html>
