@@ -12,6 +12,7 @@
          }
  
          $db = mysql_select_db("viergewinnt",$link);
+         include('exitRemaining.php');
 
          $query = sprintf("select id from player where name='%s'",$_SESSION['nick']);
          $result = mysql_query($query);
@@ -22,6 +23,7 @@
                             $gamename, $row['id']);
          mysql_query($query);
          $_SESSION['gameid'] = mysql_insert_id();
+
 
          header('Location: game.php');
     }

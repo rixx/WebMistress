@@ -40,7 +40,7 @@ $query = sprintf("update game set finished='true', turn='%s' where id='%s'",$pla
 mysql_query($query);
 
 mysql_close($link);
-
+include('exitRemaining.php');
 header('Location: viergewinnt.php');
 
 

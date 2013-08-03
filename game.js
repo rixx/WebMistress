@@ -78,7 +78,7 @@ $(function() {
                     buildTokens();
                 }
 
-             } else if (data.finished == 'true'){
+             } else  {
                 console.log('game over');
              }
 

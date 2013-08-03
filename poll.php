@@ -23,7 +23,7 @@ if ($row['finished'] == 'true') {
     if ($row['finished'] == 'true') {
         echo '{"board": '.$row['spielfeld'].', "finished": true}';
     } else {
-        echo '{"board": '.$row['spielfeld'].', "finished": true}';
+        echo '{"board": '.$row['spielfeld'].', "finished": false}';
     }
 }
 ?>
