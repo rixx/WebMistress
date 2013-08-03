@@ -17,6 +17,7 @@ $(function() {
     function buildTokens() {
 
         tokens.empty();
+        console.log(gameState);
 
         for (var row = 0; row < 6; row++) {
             for (var col = 0; col < 7; col++) {
@@ -59,11 +60,7 @@ $(function() {
             var col = Math.floor(offX / cellWidth);
 
             $.get('turn.php', {column: col}, function(data){
-                
-            if (data.error == undefined) {
-                gameState = data.board;    
-                buildTokens();
-            }
+                updateStuff(data); 
 
             });
             
@@ -77,17 +74,35 @@ $(function() {
         $.ajax({
             url: 'poll.php', 
             success: function(data, textStatus, jqXHR){
-            
-                //console.log("poll",data, textStatus, jqXHR);
-                gameState = data.board;
-                buildTokens();
-                //todo: finished
+                updateStuff(data);     
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log("polling failed",textStatus,errorThrown);    
             }});
      }
 
+     
+     function updateStuff(data) {
+
+
+         if (data.error == undefined) {
+             if (data.finished == 'false' || data.finished == undefined || !data.finished) {
+                if (data.board != undefined) {
+                    gameState = data.board;    
+                    buildTokens();
+                }
+
+             } else {
+                console.log('game over');
+             }
+
+         } else {
+            //happens every time you clock out of turn or the game is over
+         }
+
+
+     }
+    
      setInterval(polling, 1000);
 
             

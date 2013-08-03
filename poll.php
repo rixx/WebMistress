@@ -17,7 +17,13 @@ $query = sprintf("select spielfeld, finished from game where id='%s'",$_SESSION[
 $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);
 
-
-echo '{"board": '.$row['spielfeld'].', "finished": '.$row['finished'].'}';
-
+if ($row['finished'] == 'true') {
+    echo '{"error": "Game is already over."}';
+} else {
+    if ($row['finished'] == 'true') {
+        echo '{"board": '.$row['spielfeld'].', "finished": true}';
+    } else {
+        echo '{"board": '.$row['spielfeld'].', "finished": true}';
+    }
+}
 ?>
