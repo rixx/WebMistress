@@ -1,0 +1,14 @@
+.playerStatus.active:after {
+    content: ' ist dran.';
+}
+
+.playerStatus.winner:after {
+    content: ' hat gewonnen. Blackjack and hookers!';
+}
+
+.playerStatus.loser:after {
+
+    content: ' hat verlooooren. Na-na-na.';
+}
+
+
