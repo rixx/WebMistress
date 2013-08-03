@@ -67,6 +67,27 @@ $(function() {
     });
 
     buildTokens();
+
+    function updateStuff(data) {
+
+
+         if (data.error == undefined) {
+             if (data.finished == 'false' || data.finished == undefined || !data.finished) {
+                if (data.board != undefined) {
+                    gameState = data.board;    
+                    buildTokens();
+                }
+
+             } else if (data.finished == 'true'){
+                console.log('game over');
+             }
+
+         } else {
+            //happens every time you clock out of turn or the game is over
+         }
+
+
+     }
   
 
     function polling() {
@@ -82,27 +103,7 @@ $(function() {
      }
 
      
-     function updateStuff(data) {
-
-
-         if (data.error == undefined) {
-             if (data.finished == 'false' || data.finished == undefined || !data.finished) {
-                if (data.board != undefined) {
-                    gameState = data.board;    
-                    buildTokens();
-                }
-
-             } else {
-                console.log('game over');
-             }
-
-         } else {
-            //happens every time you clock out of turn or the game is over
-         }
-
-
-     }
-    
+   
      setInterval(polling, 1000);
 
             
