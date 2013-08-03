@@ -18,7 +18,7 @@
          $result = mysql_query($query);
          $row = mysql_fetch_assoc($result);
 
-         $colors = explode('_',$_GET['colors']);
+         $colors = explode("_",$_POST['colors']);
 
          $query = sprintf("insert into game (name, player1, color1, color2) values ('%s','%s','%s','%s')",
                             $gamename, $row['id'],$colors[0],$colors[1]);
@@ -40,9 +40,9 @@
    Color combination: 
     <select name="colors">
         <option value="red_yellow" selected>Red/Yellow</option>
-        <option value="red_black" selected>Red/Black</option>
-        <option value="grey_black" selected>Grey/Black</option>
-        <option value="black_grey" selected>Black/Grey</option>
+        <option value="red_black">Red/Black</option>
+        <option value="grey_black">Grey/Black</option>
+        <option value="black_grey">Black/Grey</option>
     </select>
    <input type="submit" value="Start" />
   </form>

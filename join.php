@@ -19,9 +19,9 @@
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);
 
-    if ($row['player2'] != 'null') {
+    if (!empty($row['player2'])) {
 
-        echo "Sorry, das Spiel ist schon voll";
+        echo "Sorry, das Spiel ist schon voll, player2 heißt ".$row['player2'];
 
     } else {
 

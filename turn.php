@@ -70,7 +70,7 @@ if (!$link) {
     
 
     test_win($spielfeld, $column, $i);
-    echo '{"board": '.json_encode($spielfeld).', "finished": false}';
+    echo '{"board": '.json_encode($spielfeld).', "finished": false, "turn": '.$turn.'}';
 }
 
 function test_win($spielfeld, $column, $row) {
@@ -90,7 +90,7 @@ function test_vertical($spielfeld, $column, $row) {
         $j = $row+1;
 
         while ($vertical > 0 && $vertical < 4) {
-            if ((int)$spielfeld[$j][$column] == $value) {
+            if (((int)$spielfeld[$j][$column]) == $value) {
                 $vertical++;
                 $j++;
             } else {
@@ -98,7 +98,7 @@ function test_vertical($spielfeld, $column, $row) {
             }
         }
 
-        if ($vertical = 4) {
+        if ($vertical == 4) {
             win();
         }
     }
@@ -110,7 +110,7 @@ function test_horizontal($spielfeld, $column, $row) {
     global $value;
 
     while ($c >= 0) {
-        if ((int)$spielfeld[$row][$c] == $value) {
+        if (((int)$spielfeld[$row][$c]) == $value) {
             $horizontal++;
         } else {
             break;
@@ -122,7 +122,7 @@ function test_horizontal($spielfeld, $column, $row) {
 
     while ($c < 7) {
 
-        if ((int)$spielfeld[$row][$c] == $value) {
+        if (((int)$spielfeld[$row][$c]) == $value) {
             $horizontal++;
         } else {
             break;
@@ -143,7 +143,7 @@ function test_diagonal_left($spielfeld, $column, $row) {
     $r = $row - 1;
 
     while ($c >= 0 && $r >= 0) {
-        if ((int)$spielfeld[$r][$c] == $value) {
+        if (((int)$spielfeld[$r][$c]) == $value) {
             $diagonal_left++;
             $c--;
             $r--;
@@ -153,7 +153,7 @@ function test_diagonal_left($spielfeld, $column, $row) {
     $c = $column + 1;
     $r = $row + 1;
     while ($c < 7 && $r < 6) {
-        if ((int)$spielfeld[$r][$c] == $value)  {
+        if (((int)$spielfeld[$r][$c]) == $value)  {
             $diagonal_left++;
             $c++;
             $r++;
@@ -174,7 +174,7 @@ function test_diagonal_right($spielfeld, $column, $row) {
     $r = $row - 1;
 
     while ($c >= 0 && $r >= 0) {
-        if ((int)$spielfeld[$r][$c] == $value) {
+        if (((int)$spielfeld[$r][$c]) == $value) {
             $diagonal_right++;
             $c++;
             $r--;
@@ -184,7 +184,7 @@ function test_diagonal_right($spielfeld, $column, $row) {
     $c = $column - 1;
     $r = $row + 1;
     while ($c < 7 && $r < 6) {
-        if ((int)$spielfeld[$r][$c] == $value)  {
+        if (((int)$spielfeld[$r][$c]) == $value)  {
             $diagonal_right++;
             $c--;
             $r++;
@@ -203,7 +203,7 @@ function win() {
     $query = sprintf("update game set finished='true' where id='%s'",$_SESSION['gameid']);
     mysql_query($query);
 
-    echo '{"board": '.json_encode($spielfeld).', "finished": true}';
+    echo '{"board": '.json_encode($spielfeld).', "finished": true, "turn": '.$turn.'}';
     exit();
 }
 

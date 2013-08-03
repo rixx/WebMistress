@@ -21,6 +21,7 @@ $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);
 
 $playernum = ($row['p1name'] == $_SESSION['nick']) ? '1' : '2';
+$enemynum = ($playernum % 2) + 1;
 
 mysql_close();
 
@@ -28,6 +29,7 @@ mysql_close();
 <html>
 
 <head>
+<link rel="stylesheet" href="style.css">
 <script src="jquery.js"></script>
 <script>
 
@@ -41,8 +43,9 @@ mysql_close();
                   color: "<?=$row['color2']?>" } };
 
     gameName = "<?=$row['gamename']?>";
-    whoami = <?=$playernum?>;
-    activePlayer = <?=$row['turn']?>;
+    playernum = <?=$playernum?>;
+    enemynum = <?=$enemynum?>;
+    activePlayer = 0;
                  
 
 </script>
@@ -52,6 +55,10 @@ mysql_close();
 
 <body>
 
+<h4 id="playerStatus" class="playerStatus"><?=$_SESSION['nick']?></h4>
+<h4 id="enemyStatus" class="playerStatus" ><?=$row['p'.$enemynum.'name']?></h4>
+<h4 id="gameStatus"></h4>
+
 <svg height="480" width="560">
 
     <defs>
@@ -59,18 +66,20 @@ mysql_close();
             <rect width="560" height="480" fill="white" />
         </mask>
     </defs>
-    <g id="board">
+   <g id="tokens">
+
+   </g>
+
+   <g id="board">
         <rect width="560" height="480" fill="blue" mask="url(#token-holes)" />
 
     </g>
 
 
-    <g id="tokens">
-
-    </g>
-
 </svg>
-<p><a href="giveup.php">I give up!</a></p>
-<p><a href="logout.php">I give up and want to log out!</a></p>
+<div id="links">
+<a href="giveup.php">I give up!</a><br />
+<a href="logout.php">Get me out of here!</a>
+</div>
 </body>
 </html>
