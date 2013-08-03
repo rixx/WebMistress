@@ -109,8 +109,6 @@ $(function() {
                 }
                 $('#links').html("<a href='viergewinnt.php'>Menu</a>");
                     
-
-                console.log('game over');
                 
              }
              
