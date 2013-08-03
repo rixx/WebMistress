@@ -74,6 +74,11 @@ $(function() {
 
          if (data.error == undefined) {
             
+            if ((data.board != undefined) && (data.turn != activePlayer ) {
+                 gameState = data.board;    
+                 buildTokens();
+            }
+
             player = $('#playerStatus');
             enemy = $('#enemyStatus');
 
@@ -112,10 +117,6 @@ $(function() {
                 
              }
              
-             if (data.board != undefined) {
-                    gameState = data.board;    
-                    buildTokens();
-                }
 
 
          } 
