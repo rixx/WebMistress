@@ -1,8 +1,7 @@
-<?php header('Content-Type: application/json'); ?>
+<?php header('Content-Type: application/json');?>
 <?php include('auth.php'); ?>
 <?php
 
-session_start();
 include('connectDB.php');
 
 $query = sprintf("SELECT game.player2, player.name 

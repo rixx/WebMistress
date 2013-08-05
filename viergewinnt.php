@@ -7,11 +7,10 @@
 <body>
 
 <a href="logout.php">Logout</a>
-<p> Welcome, <?php session_start(); echo $_SESSION['nick']; ?>!</p>
+<p> Welcome, <?php echo $_SESSION['nick']; ?>!</p>
 
 <?php
 
-    session_start();
     include('connectDB.php');
     
     // Look for unfinished games the current player is involved in

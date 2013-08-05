@@ -120,6 +120,7 @@ $(function() {
                     players['player'+enemynum].name = data.enemy;
                     $('#enemyStatus').text(data.enemy);
                     clearInterval(enemyIntervalID);
+                    console.log("clearing interval");
                 }
             },
             cache: false});
@@ -158,7 +159,6 @@ $(function() {
     if (enemynum == 2) {
         enemyIntervalID = setInterval(getEnemy, 1000);
     }
-
     pollingIntervalID = setInterval(polling, 1000);
             
 });

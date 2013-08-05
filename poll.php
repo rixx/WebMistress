@@ -2,7 +2,6 @@
 <?php include('auth.php'); ?>
 <?php
 
-session_start();
 include('connectDB.php');
 
 // get relevant data about the current game
