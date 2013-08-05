@@ -1,40 +1,45 @@
+<?php include('auth.php'); ?>
 <?php
 
     session_start();
     
-    $link = mysql_connect('127.0.0.1', 'rix', 'blakeks');
+    include('connectDB');
 
-    if (!$link) {
-        echo htmlspecialchars('nope');
-        die('Verbindung schlug fehl: ' . mysql_error());
-    }
-
-    $db = mysql_select_db("viergewinnt",$link);
-
-    $_SESSION['gameid'] = $_GET['id'];
 
     include('exitRemaining.php');
 
-    $query = sprintf("select player2 from game where id='%s'",$_SESSION['gameid']);
+    $query = sprintf("SELECT player2 
+                      FROM game 
+                      WHERE id='%s'",
+                      mysql_real_escape_string($_GET['id']));
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);
 
+    // check if a second player exists already
     if (!empty($row['player2'])) {
-
-        echo "Sorry, das Spiel ist schon voll, player2 heißt ".$row['player2'];
-
+        echo "Sorry, das Spiel ist schon voll.";
     } else {
 
-        $query = sprintf("select id from player where name='%s'",$_SESSION['nick']);
+        $_SESSION['gameid'] = mysql_real_escape_string($_GET['id']);
+
+        $query = sprintf("SELECT id 
+                          FROM player 
+                          WHERE name='%s'",
+                          $_SESSION['nick']);
         $result = mysql_query($query);
         $row = mysql_fetch_assoc($result);
 
-        $query = sprintf("update game set player2='%s'", $row['id']);
+        // otherwise, set the second player and redirect 
+        $query = sprintf("UPDATE game 
+                          JOIN player ON game.player2 = player.id
+                          SET player2='%s'
+                          WHERE game.id='%s'", 
+                          $row['id'], $_SESSION['gameid']);
         mysql_query($query);
 
         header('Location: game.php');
     }
 
-   ?>
+?>
 
 

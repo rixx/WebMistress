@@ -1,84 +1,88 @@
-
-<?php include('auth.php'); ?>
+<?php header('Content-Type: application/json');?>
 
 <?php
 
-    header('Content-Type: application/json');
-    session_start();
+session_start();
+include('auth.php');
+include('connectDB.php');
 
-$link = mysql_connect('127.0.0.1', 'rix', 'blakeks');
+// find out everything about the current game
+$query = sprintf("SELECT p1.name AS p1name, p2.name AS p2name, game.spielfeld, game.finished, game.turn
+                  FROM game 
+                      LEFT JOIN player p1 ON game.player1 = p1.id 
+                      LEFT JOIN player p2 ON game.player2 = p2.id
+                  WHERE game.id='%s'",
+                  $_SESSION['gameid']);
+$result = mysql_query($query);
+$row = mysql_fetch_assoc($result);
 
-if (!$link) {
-    echo htmlspecialchars('nope');
-    die('Verbindung schlug fehl: ' . mysql_error());
-}
+// find out if the current player is player 1 or 2
+$whoami = ($_SESSION['nick'] == $row['p1name']) ? '1' : '2';
 
-    $db = mysql_select_db("viergewinnt",$link);
-    
-    $query = sprintf("select p1.name as p1name, p2.name as p2name, game.spielfeld, game.finished, game.turn
-                      from game left join player p1 on game.player1 = p1.id 
-                        left join player p2 on game.player2 = p2.id
-                      where game.id='%s'",$_SESSION['gameid']);
-    $result = mysql_query($query);
-    $row = mysql_fetch_assoc($result);
+if ($row['finished'] == 'true') {
+    echo '{"error": "Game is already over."}';
+} else if ($whoami != $row['turn']) {
+    echo '{"error": "Not your turn."}';
+} else {
 
-
-    if ($_SESSION['nick'] == $row['p1name']) {
-        $whoami = '1';
-    } else $whoami = '2';
-
-
-    if ($row['finished'] == 'true') {
-        echo '{"error": "Game is already over."}';
-    } else if ($whoami != $row['turn']) {
-        echo '{"error": "Not your turn."}';
-    } else {
-    
     $spielfeld = json_decode($row['spielfeld']);
-    
     $column = (int)$_GET['column'];
-    
     $i = 5;
 
+    // find the right row for the new element 
     while ($i >= 0) {
-        
+
         if (0 == (int)$spielfeld[$i][$column]) {
             break;
         } 
         $i--;
-
     }
 
 
-    if ($i >= 0) {
+    if ($i < 0) {
+        echo '{"error": "Column is full"}';
+    } else {
 
         if ($row['p1name'] == $_SESSION['nick']) {
             $value = 1;
-            $spielfeld[$i][$column] = $value;
             $turn = '2';
 
-        } else if ($row['p2name'] = $_SESSION['nick']) {
+        } else {
             $value = 2;
-            $spielfeld[$i][$column] = $value;
             $turn = '1';
         }
 
-        $query = sprintf("update game set spielfeld = '%s', turn='%s' where id='%s'", json_encode($spielfeld),$turn,$_SESSION['gameid']);
-        mysql_query($query);
-       
-    }
-    
+        $spielfeld[$i][$column] = $value;
 
-    test_win($spielfeld, $column, $i);
-    echo '{"board": '.json_encode($spielfeld).', "finished": false, "turn": '.$turn.'}';
+        // insert the new board configuration and turn
+        $query = sprintf("UPDATE game 
+                          SET spielfeld = '%s', turn='%s' 
+                          WHERE id='%s'", 
+                          json_encode($spielfeld), $turn, $_SESSION['gameid']);
+        mysql_query($query);
+
+        if (test_win($spielfeld, $column, $i)) {
+            echo '{"board": '.json_encode($spielfeld).', "finished": true, "turn": '.$turn.'}';
+        } else {
+            echo '{"board": '.json_encode($spielfeld).', "finished": false, "turn": '.$turn.'}';
+        }
+
+    }
 }
 
 function test_win($spielfeld, $column, $row) {
 
-    test_vertical($spielfeld, $column, $row);
-    test_horizontal($spielfeld, $column, $row);
-    test_diagonal_left($spielfeld, $column, $row);
-    test_diagonal_right($spielfeld, $column, $row);
+    if (test_vertical($spielfeld, $column, $row)) {
+        return true;
+    } else if (test_horizontal($spielfeld, $column, $row)) {
+        return true;
+    } else if (test_diagonal_left($spielfeld, $column, $row)) {
+        return true;
+    } else if (test_diagonal_right($spielfeld, $column, $row)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function test_vertical($spielfeld, $column, $row) {
@@ -100,8 +104,11 @@ function test_vertical($spielfeld, $column, $row) {
 
         if ($vertical == 4) {
             win();
+            return true;
         }
     }
+
+    return false;
 }
 
 function test_horizontal($spielfeld, $column, $row) {
@@ -132,7 +139,10 @@ function test_horizontal($spielfeld, $column, $row) {
 
     if ($horizontal >= 4) {
         win();
+        return true;
     }
+
+    return false;
 }
 
 function test_diagonal_left($spielfeld, $column, $row) {
@@ -162,7 +172,10 @@ function test_diagonal_left($spielfeld, $column, $row) {
 
     if ($diagonal_left >= 4) {
         win();
+        return true;
     }
+
+    return false;
 }
 
 
@@ -193,20 +206,22 @@ function test_diagonal_right($spielfeld, $column, $row) {
 
     if ($diagonal_right >= 4) {
         win();
+        return true;
     }
+
+    return false;
 
 }
 
 
 function win() {
 
-    $query = sprintf("update game set finished='true' where id='%s'",$_SESSION['gameid']);
+    $query = sprintf("UPDATE game 
+                      SET finished='true' 
+                      WHERE id='%s'",
+                      $_SESSION['gameid']);
     mysql_query($query);
-
-    echo '{"board": '.json_encode($spielfeld).', "finished": true, "turn": '.$turn.'}';
-    exit();
 }
-
 
 ?>
 

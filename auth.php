@@ -1,11 +1,9 @@
 <?php
     session_start();
 
-    $hostname = $_SERVER['HTTP_HOST'];
-    $path = dirname($_SERVER['PHP_SELF']);
-
+    //if someone's not logged in, he's redirected to the login page
     if (!isset($_SESSION['login']) || !$_SESSION['login']) {
-        header('Location: http://'.$hostname.($path == '/' ? '' : $path).'/login.php');
+        header('Location: login.php');
         exit;
     }
 ?>
