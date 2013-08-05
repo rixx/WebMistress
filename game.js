@@ -50,7 +50,7 @@ $(function() {
             enemy = $('#enemyStatus');
 
             //todo: check if something has changed before redrawing
-            if ((data.board != undefined) && (data.turn != activePlayer ) {
+            if ((data.board != undefined) && (data.turn != activePlayer )) {
                  gameState = data.board;    
                  buildTokens();
             }
