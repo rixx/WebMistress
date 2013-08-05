@@ -4,11 +4,11 @@
 // this prevents players from playing multiple games simultaniously
 $query = sprintf("SELECT game.id, p1.name as p1name, p2.name as p2name
                   FROM game 
-                    LEFT JOIN player p1 ON game.player1=p1.id 
-                    LEFT JOIN player p2 ON game.player2=p2.id 
+                      LEFT JOIN player p1 ON game.player1=p1.id 
+                      LEFT JOIN player p2 ON game.player2=p2.id 
                   WHERE game.finished='false' 
-                    AND (p1.name='%1s' or p2.name='%1s')",
-                  $_SESSION['nick']);
+                      AND (p1.name='%1s' or p2.name='%1s')",
+                  $_SESSION['nick'],$_SESSION['nick']);
 
 $result = mysql_query($query);
 

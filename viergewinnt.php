@@ -20,8 +20,10 @@
                           LEFT JOIN player p1 ON game.player1=p1.id 
                           LEFT JOIN player p2 ON game.player2=p2.id 
                       WHERE game.finished='false' 
-                          AND (p1.name='%1s' OR p2.name='%1s')",
+                          AND (p1.name='%s' OR p2.name='%s')",
+                      mysql_real_escape_string($_SESSION['nick']),
                       mysql_real_escape_string($_SESSION['nick']));
+                      echo $query;
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);
     
