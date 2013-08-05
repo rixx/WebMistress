@@ -3,7 +3,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     session_start();
 
     $username = $_POST['nick'];
-    $passwort = $_POST['pwd'];
+    $password = $_POST['pwd'];
 
     include('connectDB.php');
 
@@ -20,8 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Sorry, ".$_POST['nick'].", there seems to be an error with your authentication.";
     } else {
 
+        $hashed_pw = crypt($password,'$6$rounds=5000$'.$username.'DHBW2013wasfuereinspass$');
         // check if password matches
-        if ($_POST['pwd'] == $row['pw']) {
+        if ($hashed_pw == $row['pw']) {
 
             $_SESSION['login'] = true;
           //  $_SESSION['nick'] = $_POST['nick'];
