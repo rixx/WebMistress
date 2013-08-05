@@ -7,14 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $gamename = $_POST['name'];
 
-    // gets the current player's ID
-    $query = sprintf("SELECT id 
-                      FROM player 
-                      WHERE name='%s'",
-                      $_SESSION['nick']);
-    $result = mysql_query($query);
-    $row = mysql_fetch_assoc($result);
-
     // gets the selected color combination
     $colors = explode("_",$_POST['colors']);
 
@@ -22,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = sprintf("INSERT INTO game (name, player1, color1, color2) 
                       VALUES ('%s','%s','%s','%s')",
                       mysql_real_escape_string($gamename), 
-                      $row['id'],
+                      $_SESSION['uid'],
                       mysql_real_escape_string($colors[0]),
                       mysql_real_escape_string($colors[1]));
     mysql_query($query);

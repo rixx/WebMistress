@@ -23,8 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // check if password matches
         if ($_POST['pwd'] == $row['pw']) {
 
-           $_SESSION['login'] = true;
-           $_SESSION['nick'] = $_POST['nick'];
+            $_SESSION['login'] = true;
+          //  $_SESSION['nick'] = $_POST['nick'];
+            $_SESSION['uid'] = $row['id'];
 
             header('Location: viergewinnt.php');
             mysql_close($link);

@@ -4,7 +4,7 @@
     include('connectDB.php');
 
     // get all information about the running game
-    $query = sprintf("SELECT game.name as gamename, p1.name as p1name, p2.name as p2name, game.color1, game.color2, game.spielfeld, game.turn, game.finished
+    $query = sprintf("SELECT game.name as gamename, game.player1, p1.name as p1name, p2.name as p2name, game.color1, game.color2, game.spielfeld, game.turn, game.finished
                       FROM game 
                           LEFT JOIN player p1 ON game.player1 = p1.id 
                           LEFT JOIN player p2 ON game.player2 = p2.id
@@ -14,7 +14,7 @@
     $row = mysql_fetch_assoc($result);
     
     // find out whether the current player is player 1 or player 2
-    $playernum = ($row['p1name'] == $_SESSION['nick']) ? '1' : '2';
+    $playernum = ($row['player1'] == $_SESSION['uid']) ? '1' : '2';
     $enemynum = ($playernum % 2) + 1;
     
     mysql_close();
@@ -46,7 +46,7 @@
 </head>
 
 <body>
-    <h4 id="playerStatus" class="playerStatus"><?=$_SESSION['nick']?></h4>
+    <h4 id="playerStatus" class="playerStatus"><?=$row['p'.$playernum.'name']?></h4>
     <h4 id="enemyStatus" class="playerStatus" ><?=$row['p'.$enemynum.'name']?></h4>
     <h4 id="gameStatus"></h4>
     

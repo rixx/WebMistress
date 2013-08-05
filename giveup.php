@@ -6,38 +6,31 @@ session_start();
 include('connectDB.php');
 
 // get player names and ids from the running game
-$query = sprintf("SELECT p1.name AS p1name, p2.name AS p2name, game.finished
+$query = sprintf("SELECT player1, player2, finished
                   FROM game 
-                      LEFT JOIN player p1 ON game.player1 = p1.id 
-                      LEFT JOIN player p2 ON game.player2 = p2.id
                   WHERE game.id='%s'",
                   $_SESSION['gameid']);
 $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);
 
 if ($row['finished'] == 'false') {
-    $playernum = ($row['p1name'] == $_SESSION['nick']) ? '1' : '2';
+    $playernum = ($row['player1'] == $_SESSION['uid']) ? '1' : '2';
     
     // set winner to the other player
-    if ($_SESSION['nick'] == $row['p1name']) {
-        $winner = $row['p2name'];
-    } else {
-        $winner = $row['p1name'];
-    }
-    
-    $loser = $_SESSION['nick'];
+    $winner = ($_SESSION['uid'] == $row['player1']) ? $row['player2'] : $row['player1'];
+    $loser = $_SESSION['uid'];
     
     // increment won and played games for the winner
     $query = sprintf("UPDATE player 
                       SET played = played + 1, won = won + 1
-                      WHERE name='%s'",
+                      WHERE id='%s'",
                       $winner);
     mysql_query($query);
     
     //increment played games for the loser
     $query = sprintf("UPDATE player 
                       SET played = played + 1 
-                      WHERE name='%s'",
+                      WHERE id='%s'",
                       $loser);
     mysql_query($query);
     

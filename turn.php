@@ -7,17 +7,15 @@ include('auth.php');
 include('connectDB.php');
 
 // find out everything about the current game
-$query = sprintf("SELECT p1.name AS p1name, p2.name AS p2name, game.spielfeld, game.finished, game.turn
+$query = sprintf("SELECT player1, player2, spielfeld, finished, turn
                   FROM game 
-                      LEFT JOIN player p1 ON game.player1 = p1.id 
-                      LEFT JOIN player p2 ON game.player2 = p2.id
                   WHERE game.id='%s'",
                   $_SESSION['gameid']);
 $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);
 
 // find out if the current player is player 1 or 2
-$whoami = ($_SESSION['nick'] == $row['p1name']) ? '1' : '2';
+$whoami = ($_SESSION['uid'] == $row['player1']) ? '1' : '2';
 
 if ($row['finished'] == 'true') {
     echo '{"error": "Game is already over."}';
@@ -43,7 +41,7 @@ if ($row['finished'] == 'true') {
         echo '{"error": "Column is full"}';
     } else {
 
-        if ($row['p1name'] == $_SESSION['nick']) {
+        if ($row['player1'] == $_SESSION['uid']) {
             $value = 1;
             $turn = '2';
 

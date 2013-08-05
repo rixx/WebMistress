@@ -4,6 +4,7 @@
 
 include('connectDB.php');
 
+// gets the second player
 $query = sprintf("SELECT game.player2, player.name 
                   FROM game 
                       LEFT JOIN player ON game.player2=player.id

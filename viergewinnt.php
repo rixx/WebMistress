@@ -1,36 +1,41 @@
 <?php include('auth.php'); ?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+<html>
 <head>
     <title>Vier Gewinnt - Choose your game!</title>
 </head>
 
 <body>
 
+<?php
+    include('connectDB.php');
+    
+    $query = sprintf("SELECT name
+                      FROM player
+                      WHERE id='%s'",
+                      $_SESSION['uid']);
+    $result = mysql_query($query);
+    $row = mysql_fetch_assoc($result);
+    $playername = $row['name'];
+?>
+
 <a href="logout.php">Logout</a>
-<p> Welcome, <?php echo $_SESSION['nick']; ?>!</p>
+<p> Welcome, <?=$playername; ?>!</p>
 
 <?php
 
-    include('connectDB.php');
-    
     // Look for unfinished games the current player is involved in
-    $query = sprintf("SELECT game.id 
+    $query = sprintf("SELECT id 
                       FROM game 
-                          LEFT JOIN player p1 ON game.player1=p1.id 
-                          LEFT JOIN player p2 ON game.player2=p2.id 
                       WHERE game.finished='false' 
-                          AND (p1.name='%s' OR p2.name='%s')",
-                      mysql_real_escape_string($_SESSION['nick']),
-                      mysql_real_escape_string($_SESSION['nick']));
+                          AND (player1='%s' or player2='%s')",
+                      $_SESSION['uid'], $_SESSION['uid']);
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);
     
     // If there is such a game, redirect
     if ($row) {
-    
        $_SESSION['gameid'] = $row['id'];
        header('Location: game.php');
-    
     } 
 
     echo "<a href=\"startgame.php\">Start new game</a><br />";
