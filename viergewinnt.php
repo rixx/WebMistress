@@ -23,7 +23,6 @@
                           AND (p1.name='%s' OR p2.name='%s')",
                       mysql_real_escape_string($_SESSION['nick']),
                       mysql_real_escape_string($_SESSION['nick']));
-                      echo $query;
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);
     
