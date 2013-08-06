@@ -15,7 +15,7 @@
     
         include('connectDB.php');
     
-        if (strlen($username < 3) || strlen($password) < 3) {
+        if (strlen($username) < 3 || strlen($password) < 3) {
             echo "Username or Password too short.";
         // check if passwords are ok
         } else if ($password != $password2) {
