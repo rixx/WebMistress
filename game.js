@@ -95,7 +95,7 @@ $(function() {
     function polling() {
         
         $.ajax({
-            url: 'poll.php', 
+            url: 'pollGame.php', 
             success: function(data, textStatus, jqXHR){
                 updateStuff(data);     
             },
@@ -112,7 +112,7 @@ $(function() {
     function getEnemy() {
 
         $.ajax({
-            url: 'getenemy.php', 
+            url: 'pollEnemy.php', 
             success: function(data) {
             
                 // when the new player is returned, stop polling and set his name
