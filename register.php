@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Vier Gewinnt - Login</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <?php
@@ -44,11 +45,11 @@
     }
     ?>
 
-    <form action="register.php" method="post">
-        Nickname: <input type="text" name="nick" /><br />
-        Mail (optional): <input type="text" name="mail" /><br />
-        Passwort: <input type="password" name="pwd" /><br />
-        Passwort (repeat): <input type="password" name="pwd2" /><br />
+    <form class="register" action="register.php" method="post">
+        <label>Nickname: </label><input type="text" name="nick" /><br />
+        <label>Mail (optional): </label><input type="text" name="mail" /><br />
+        <label>Passwort: </label><input type="password" name="pwd" /><br />
+        <label>Passwort (repeat): </label><input type="password" name="pwd2" /><br />
         <input type="submit" value="Register!" />
     </form>
 </body>

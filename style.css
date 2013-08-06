@@ -1,3 +1,21 @@
+input[type=text],
+input[type=password]{
+    width: 20em;
+}
+
+label{
+    text-align: right;
+    width: 10em;
+    float: left;
+    margin-right: 0.5em;
+}
+
+.register input[type=submit],
+.login input[type=submit] {
+    margin-left: 12.5em;
+    width: 20em;
+}
+
 .playerStatus.active:after {
     content: ' ist dran.';
 }

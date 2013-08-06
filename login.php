@@ -40,11 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <title>Vier Gewinnt - Login</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <form action="login.php" method="post">
-        Nickname: <input type="text" name="nick" /><br />
-        Passwort: <input type="password" name="pwd" /><br />
+    <form class="login" action="login.php" method="post">
+        <label>Nickname: </label><input type="text" name="nick" /><br />
+        <label>Passwort: </label><input type="password" name="pwd" /><br />
         <input type="submit" value="Login" />
     </form>
 </body>
