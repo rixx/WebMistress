@@ -2,8 +2,9 @@
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     session_start();
-    include('connectDB.php');
-    include('exitRemaining.php');
+    include('../lib/auth.php');
+    include('../lib/connectDB.php');
+    include('../lib/exitRemaining.php');
 
     $gamename = htmlentities($_POST['name']);
 
@@ -27,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <html>
 <head>
-    <title>Vier Gewinnt - Login</title>
+    <title>Vier Gewinnt - Start Game</title>
 </head>
 <body>
     <form action="startgame.php" method="post">

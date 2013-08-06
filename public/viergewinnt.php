@@ -1,7 +1,6 @@
-<?php include('auth.php'); ?>
-<?php
+<?php include('../lib/auth.php');
 
-    include('connectDB.php');
+    include('../lib/connectDB.php');
     
     // Get the playername
     $query = sprintf("SELECT name, played, won
@@ -34,8 +33,8 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="style.css">
-    <script src="jquery.js"></script>
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/lib/jquery.js"></script>
     <script type="text/javascript">
 
        setInterval(function(){$("#gamelist").load("pollGamelist.php");}, 1000);
@@ -46,11 +45,11 @@
 
 <body>
 
-    <a href="logout.php">Logout</a>
+    <a href="/logout.php">Logout</a>
     <p> Welcome, <?=$playername; ?>!</p>
     <p> You've played <?=$played?> games and won <?=$won?> of them (<?=$percentage?> %)</p>
 
-    <a href="startgame.php">Start new game</a><br />
+    <a href="/startgame.php">Start new game</a><br />
     <ul id="gamelist"> </ul>
 
 </body>

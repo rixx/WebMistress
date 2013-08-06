@@ -1,8 +1,8 @@
-<?php include('auth.php'); ?>
+<?php include('../lib/auth.php'); ?>
 <?php
 
-include('connectDB.php');
-include('exitRemaining.php');
+include('../lib/connectDB.php');
+include('../lib/exitRemaining.php');
 
 $query = sprintf("SELECT player2 
                   FROM game 

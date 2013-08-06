@@ -1,7 +1,7 @@
-<?php include('auth.php'); ?>
+<?php include('../lib/auth.php'); ?>
 <?php
 
-    include('connectDB.php');
+    include('../lib/connectDB.php');
 
     // get all information about the running game
     $query = sprintf("SELECT game.name as gamename, game.player1, p1.name as p1name, p2.name as p2name, game.color1, game.color2, game.spielfeld, game.turn, game.finished
@@ -23,8 +23,8 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="style.css">
-    <script src="jquery.js"></script>
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/scripts/jquery.js"></script>
 
     <script>
         gameState = <?=$row['spielfeld'] ?>;
@@ -42,7 +42,7 @@
         activePlayer = 0;
     </script>
 
-<script src="game.js"></script>
+<script src="/scripts/game.js"></script>
 </head>
 
 <body>

@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = htmlentities($_POST['nick']);
     $password = $_POST['pwd'];
 
-    include('connectDB.php');
+    include('../lib/connectDB.php');
 
     // get authentication details of player
     $query = sprintf("SELECT id, name, pw 
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <title>Vier Gewinnt - Login</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
 </head>
 <body>
     <form class="login" action="login.php" method="post">

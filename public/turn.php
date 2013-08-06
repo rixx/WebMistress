@@ -3,8 +3,8 @@
 <?php
 
 session_start();
-include('auth.php');
-include('connectDB.php');
+include('../lib/auth.php');
+include('../lib/connectDB.php');
 
 // find out everything about the current game
 $query = sprintf("SELECT player1, player2, spielfeld, finished, turn

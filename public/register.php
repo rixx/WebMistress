@@ -1,7 +1,7 @@
 <html>
 <head>
-    <title>Vier Gewinnt - Login</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Vier Gewinnt - Register</title>
+    <link rel="stylesheet" href="/styles/style.css" />
 </head>
 <body>
     <?php
@@ -13,7 +13,7 @@
         $password2 = $_POST['pwd2'];
         $mail = $_POST['mail'];
     
-        include('connectDB.php');
+        include('../lib/connectDB.php');
     
         if (strlen($username) < 3 || strlen($password) < 3) {
             echo "Username or Password too short.";
@@ -41,13 +41,13 @@
                                   mysql_real_escape_string(htmlentities($hashed_pw)));
                 mysql_query($query);
     
-                echo "Success! Wooo! Click <a href=\"login.php\">here</a> to log in!";
+                echo "Success! Wooo! Click <a href=\"/login.php\">here</a> to log in!";
             }
         }
     }
     ?>
 
-    <form class="register" action="register.php" method="post">
+    <form class="register" action="/register.php" method="post">
         <label>Nickname: </label><input type="text" name="nick" /><br />
         <label>Mail (optional): </label><input type="text" name="mail" /><br />
         <label>Passwort: </label><input type="password" name="pwd" /><br />
