@@ -13,6 +13,8 @@ $query = sprintf("SELECT player1, player2, spielfeld, finished, turn
                   $_SESSION['gameid']);
 $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);
+$player1 = $row['player1'];
+$player2 = $row['player2'];
 
 // find out if the current player is player 1 or 2
 $whoami = ($_SESSION['uid'] == $row['player1']) ? '1' : '2';
@@ -218,6 +220,20 @@ function win() {
                       SET finished='true' 
                       WHERE id='%s'",
                       $_SESSION['gameid']);
+    mysql_query($query);
+
+    global $whoami, $player1, $player2;
+
+    $query = sprintf("UPDATE player
+                      SET won = won + 1, played = played + 1
+                      WHERE id='%s'",
+                      ($whoami == '1') ? $player1 : $player2);
+    mysql_query($query);
+
+    $query = sprintf("UPDATE player
+                      SET played = played + 1
+                      WHERE id='%s'",
+                      ($whoami == '1') ? $player2 : $player1);
     mysql_query($query);
 }
 

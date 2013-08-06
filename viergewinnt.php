@@ -1,27 +1,19 @@
 <?php include('auth.php'); ?>
-<html>
-<head>
-    <title>Vier Gewinnt - Choose your game!</title>
-</head>
-
-<body>
-
 <?php
+
     include('connectDB.php');
     
-    $query = sprintf("SELECT name
+    // Get the playername
+    $query = sprintf("SELECT name, played, won
                       FROM player
                       WHERE id='%s'",
                       $_SESSION['uid']);
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);
     $playername = $row['name'];
-?>
-
-<a href="logout.php">Logout</a>
-<p> Welcome, <?=$playername; ?>!</p>
-
-<?php
+    $won = $row['won'];
+    $played = $row['played'];
+    $percentage = ($played == 0) ? 0 : round(($won/$played)*100);
 
     // Look for unfinished games the current player is involved in
     $query = sprintf("SELECT id 
@@ -38,22 +30,28 @@
        header('Location: game.php');
     } 
 
-    echo "<a href=\"startgame.php\">Start new game</a><br />";
-
-    // Look for games without a second player
-    $query = sprintf("SELECT game.id, game.name AS gamename, player.name AS player1name
-                      FROM game 
-                          JOIN player ON game.player1=player.id 
-                      WHERE game.finished='false'
-                          AND game.player2 IS NULL");
-    $result = mysql_query($query);
-    
-    echo "Running games:<br>";
-    
-    while ($row = mysql_fetch_assoc($result)) {
-        echo "<a href=\"join.php?id=".$row['id']."\">".$row['gamename']." (".$row['player1name'].")</a><br>";
-    }
 ?>
+
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery.js"></script>
+    <script type="text/javascript">
+
+       setInterval(function(){$("#gamelist").load("pollGamelist.php");}, 1000);
+
+    </script>
+    <title>Vier Gewinnt - Laufende Spiele</title>
+</head>
+
+<body>
+
+    <a href="logout.php">Logout</a>
+    <p> Welcome, <?=$playername; ?>!</p>
+    <p> You've played <?=$played?> games and won <?=$won?> of them (<?=$percentage?> %)</p>
+
+    <a href="startgame.php">Start new game</a><br />
+    <ul id="gamelist"> </ul>
 
 </body>
 </html>
