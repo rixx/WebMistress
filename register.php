@@ -37,8 +37,8 @@
                 $hashed_pw = crypt($password,'$6$rounds=5000$'.$username.'DHBW2013wasfuereinspass$');
                 // register player
                 $query = sprintf("INSERT INTO player (name, pw) VALUES ('%s','%s')",
-                                  mysql_real_escape_string($username),
-                                  mysql_real_escape_string($hashed_pw));
+                                  mysql_real_escape_string(htmlentities($username)),
+                                  mysql_real_escape_string(htmlentities($hashed_pw)));
                 mysql_query($query);
     
                 echo "Success! Wooo! Click <a href=\"login.php\">here</a> to log in!";

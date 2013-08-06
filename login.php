@@ -2,7 +2,7 @@
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     session_start();
 
-    $username = $_POST['nick'];
+    $username = htmlentities($_POST['nick']);
     $password = $_POST['pwd'];
 
     include('connectDB.php');
@@ -11,13 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = sprintf("SELECT id, name, pw 
                       FROM player 
                       WHERE name='%s'", 
-                      mysql_real_escape_string($_POST['nick']));
+                      mysql_real_escape_string($username));
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);
 
     // check if user exists
     if (!$row) {
-        echo "Sorry, ".$_POST['nick'].", there seems to be an error with your authentication.";
+        echo "Sorry, ".$username.", there seems to be an error with your authentication.";
     } else {
 
         $hashed_pw = crypt($password,'$6$rounds=5000$'.$username.'DHBW2013wasfuereinspass$');
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header('Location: viergewinnt.php');
             mysql_close($link);
         } else {
-            echo "Sorry, ".$_POST['nick'].", there seems to be an error with your authentication.";
+            echo "Sorry, ".$username.", there seems to be an error with your authentication.";
         }
     }
 }

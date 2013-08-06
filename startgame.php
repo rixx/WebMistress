@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include('connectDB.php');
     include('exitRemaining.php');
 
-    $gamename = $_POST['name'];
+    $gamename = htmlentities($_POST['name']);
 
     // gets the selected color combination
     $colors = explode("_",$_POST['colors']);
@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       VALUES ('%s','%s','%s','%s')",
                       mysql_real_escape_string($gamename), 
                       $_SESSION['uid'],
-                      mysql_real_escape_string($colors[0]),
-                      mysql_real_escape_string($colors[1]));
+                      mysql_real_escape_string(htmlentities($colors[0])),
+                      mysql_real_escape_string(htmlentities($colors[1])));
     mysql_query($query);
 
     $_SESSION['gameid'] = mysql_insert_id();
