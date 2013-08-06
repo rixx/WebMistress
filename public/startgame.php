@@ -1,10 +1,12 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    session_start();
-    include('../lib/auth.php');
-    include('../lib/connectDB.php');
-    include('../lib/exitRemaining.php');
+session_start();
+include('../lib/auth.php');
+include('../lib/connectDB.php');
+include('../lib/exitRemaining.php');
+
+ 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $gamename = htmlentities($_POST['name']);
 
@@ -23,14 +25,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['gameid'] = mysql_insert_id();
 
     header('Location: game.php');
-}
-?>
+} else {
+    $query = sprintf("SELECT name
+                      FROM player
+                      WHERE id='%s'",
+                      $_SESSION['uid']);
+    $result = mysql_query($query);
+    $row = mysql_fetch_assoc($result);
 
-<html>
-<head>
-    <title>Vier Gewinnt - Start Game</title>
-</head>
-<body>
+    $username = $row['name'];
+}
+
+
+$BODY=<<<EOB
+    
     <form action="startgame.php" method="post">
         Game name: <input type="text" name="name" /><br />
         Color combination: 
@@ -42,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </select>
         <input type="submit" value="Start" />
     </form>
-</body>
-</html>
+EOB;
 
+include('../lib/template/base.php');
+?>

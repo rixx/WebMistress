@@ -34,20 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "Sorry, ".$username.", there seems to be an error with your authentication.";
         }
     }
+} else {
+    header('Location: /');
 }
 ?>
-
-<html>
-<head>
-    <title>Vier Gewinnt - Login</title>
-    <link rel="stylesheet" href="/styles/style.css" />
-</head>
-<body>
-    <form class="login" action="login.php" method="post">
-        <label>Nickname: </label><input type="text" name="nick" /><br />
-        <label>Passwort: </label><input type="password" name="pwd" /><br />
-        <input type="submit" value="Login" />
-    </form>
-</body>
-</html>
 

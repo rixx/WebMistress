@@ -1,5 +1,5 @@
-<?php include('../lib/auth.php');
-
+<?php
+if (isset($_SESSION['uid'])) {
     include('../lib/connectDB.php');
     
     // Get the playername
@@ -9,7 +9,7 @@
                       $_SESSION['uid']);
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);
-    $playername = $row['name'];
+    $username = $row['name'];
     $won = $row['won'];
     $played = $row['played'];
     $percentage = ($played == 0) ? 0 : round(($won/$played)*100);
@@ -29,28 +29,22 @@
        header('Location: game.php');
     } 
 
-?>
 
-<html>
-<head>
-    <link rel="stylesheet" href="/styles/style.css">
-    <script src="/lib/jquery.js"></script>
+$HEAD=<<<EOH
     <script type="text/javascript">
-
-       setInterval(function(){$("#gamelist").load("pollGamelist.php");}, 1000);
-
+       setInterval(function() {\$ ("#gamelist").load("/api/pollGamelist.php"); }, 1000);
     </script>
-    <title>Vier Gewinnt - Laufende Spiele</title>
-</head>
+EOH;
 
-<body>
-
-    <a href="/logout.php">Logout</a>
-    <p> Welcome, <?=$playername; ?>!</p>
-    <p> You've played <?=$played?> games and won <?=$won?> of them (<?=$percentage?> %)</p>
+$BODY=<<<EOB
+    <p> Welcome, {$username}!</p>
+    <p> You've played {$played} games and won {$won} of them ({$percentage} %)</p>
 
     <a href="/startgame.php">Start new game</a><br />
     <ul id="gamelist"> </ul>
-
-</body>
-</html>
+EOB;
+} else {
+$BODY="Weeee";
+}
+include('../lib/template/base.php');
+?>

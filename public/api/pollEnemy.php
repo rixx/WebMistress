@@ -1,8 +1,8 @@
 <?php header('Content-Type: application/json');?>
-<?php include('auth.php'); ?>
+<?php include('../../lib/auth.php'); ?>
 <?php
 
-include('connectDB.php');
+include('../../lib/connectDB.php');
 
 // gets the second player
 $query = sprintf("SELECT game.player2, player.name 
