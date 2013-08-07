@@ -1,7 +1,7 @@
 Viergewinnt
 ===========
 
-This is a project for the Web Engineering course at DHBW Stuttgart 2013. The goal was to implement the game Captain's Mistress using only php, javascript with jQuery and a MySQL database.
+This is a project for the Web Engineering course at DHBW Stuttgart 2013. The goal was to implement the game Captain's Mistress using only php, javascript with jQuery and a MySQL database. The current version is hosted at http://viergewinnt.foyfoy.de/.
 
 Implementation details, required configuration of the web server aswell as a SQL dump to get you startet may be found in the doc/ directory. See below for information on how to set this project up (webserver configuration etc).
 
