@@ -32,6 +32,7 @@ if(isset($_SESSION['login']) && $_SESSION['login']) {
 
 ?>
 
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="/styles/style.css">
