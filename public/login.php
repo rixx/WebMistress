@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($hashed_pw == $row['pw']) {
 
             $_SESSION['login'] = true;
-          //  $_SESSION['nick'] = $_POST['nick'];
             $_SESSION['uid'] = $row['id'];
 
             header('Location: index.php');
@@ -41,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 function errorpage($username) {
     global $BODY;
-    $BODY ="Sorry, ".htmlentities($username).", there seems to be an error with your authentication.</p>";
+    $BODY ="<div class=\"alert alert-danger\">Sorry, ".htmlentities($username).", there seems to be an error with your authentication. Are you sure that you are <a href=\"/register.php\" class=\"alert-link\">registered</a>?</div>";
     getLoginPage();
 }
 
