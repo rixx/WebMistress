@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           //  $_SESSION['nick'] = $_POST['nick'];
             $_SESSION['uid'] = $row['id'];
 
-            header('Location: viergewinnt.php');
+            header('Location: index.php');
             mysql_close($link);
         } else {
             echo "Sorry, ".$username.", there seems to be an error with your authentication.";

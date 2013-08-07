@@ -1,6 +1,7 @@
-<?php include('../lib/auth.php');
-
+<?php 
+if(!isset($_SESSION['login']) || !$_SESSION['login']) {
     include('../lib/connectDB.php');
+    session_start();
     
     // Get the playername
     $query = sprintf("SELECT name, played, won
@@ -54,3 +55,13 @@
 
 </body>
 </html>
+<?php } else {?>
+
+<html>
+<head></head>
+<body>
+    <p><a href="login.php">Login</a></p>
+    <p><a href="register.php">Register</a></p>
+</body>
+</html>
+<?php } ?>

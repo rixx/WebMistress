@@ -1,8 +1,7 @@
-<?php include('../lib/auth.php'); ?>
-<?php
+<?php 
+include('../lib/auth.php');
 
 session_start();
-
 include('../lib/connectDB.php');
 
 // get player names and ids from the running game
@@ -43,6 +42,6 @@ if ($row['finished'] == 'false') {
 
 mysql_close($link);
 include('../lib/exitRemaining.php');
-header('Location: viergewinnt.php');
+header('Location: login.php');
 
 ?>
