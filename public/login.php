@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // check if user exists
     if (!$row) {
-        echo "Sorry, ".$username.", there seems to be an error with your authentication.";
+        errorpage($username);
     } else {
 
         $hashed_pw = crypt($password,'$6$rounds=5000$'.$username.'DHBW2013wasfuereinspass$');
@@ -31,11 +31,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header('Location: viergewinnt.php');
             mysql_close($link);
         } else {
-            echo "Sorry, ".$username.", there seems to be an error with your authentication.";
+            errorpage($username);
         }
     }
-} else {
-    header('Location: /');
+}
+function errorpage($username) {
+$BODY=<<<EOB
+Sorry, {$username}, there seems to be an error with your authentication.</p>
+<form class="login form" action="login.php" method="post">
+    <div class="form-group">
+        <label class="col-lg-1 control-label">
+            Nickname: 
+        </label>
+        <div class="col-lg-11">
+            <div class="col-lg-3"><input class="form-control" type="text" name="nick" /></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-1 control-label">
+            Passwort: 
+        </label>
+        
+        <div class="col-lg-11">
+            <div class="col-lg-3"><input class="form-control" type="password" name="pwd" /></div>
+        </div>
+    </div>
+    <div class="form-group"> 
+        <div class="col-lg-11 col-lg-offset-1">
+        <div class="col-lg-3"><input class="btn btn-primary btn-lg btn-block" type="submit" value="Login" /></div>
+        </div>
+    </div>
+</form>
+EOB;
+include('../lib/template/base.php');
 }
 ?>
 
