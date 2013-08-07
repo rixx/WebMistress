@@ -42,6 +42,6 @@ if ($row['finished'] == 'false') {
 
 mysql_close($link);
 include('../lib/exitRemaining.php');
-header('Location: login.php');
+header('Location: index.php');
 
 ?>
