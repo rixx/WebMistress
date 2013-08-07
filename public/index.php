@@ -1,7 +1,7 @@
 <?php 
-if(!isset($_SESSION['login']) || !$_SESSION['login']) {
+session_start();
+if(isset($_SESSION['login']) && $_SESSION['login']) {
     include('../lib/connectDB.php');
-    session_start();
     
     // Get the playername
     $query = sprintf("SELECT name, played, won
@@ -35,10 +35,10 @@ if(!isset($_SESSION['login']) || !$_SESSION['login']) {
 <html>
 <head>
     <link rel="stylesheet" href="/styles/style.css">
-    <script src="/lib/jquery.js"></script>
+    <script src="/scripts/jquery.js"></script>
     <script type="text/javascript">
 
-       setInterval(function(){$("#gamelist").load("pollGamelist.php");}, 1000);
+       setInterval(function(){$("#gamelist").load("/api/pollGamelist.php");}, 1000);
 
     </script>
     <title>Vier Gewinnt - Laufende Spiele</title>
