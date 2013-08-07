@@ -1,4 +1,5 @@
 <?php
+$BODY;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     session_start();
 
@@ -34,11 +35,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             errorpage($username);
         }
     }
+} else {
+    getLoginPage();
 }
+
 function errorpage($username) {
-$BODY=<<<EOB
-Sorry, {$username}, there seems to be an error with your authentication.</p>
-<form class="login form" action="login.php" method="post">
+    global $BODY;
+    $BODY ="Sorry, ".htmlentities($username).", there seems to be an error with your authentication.</p>";
+    getLoginPage();
+}
+
+function getLoginPage() {
+    global $BODY;
+    $BODY.=<<<EOB
+<form class="login form-horizontal" action="login.php" method="post">
     <div class="form-group">
         <label class="col-lg-1 control-label">
             Nickname: 

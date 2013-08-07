@@ -48,6 +48,8 @@
                             </div>
                         </div>
                     </form>
+                    <li class="divider"></li>
+                    <div class="col-lg-8 col-lg-offset-4"><a href="/register.php" class="btn btn-link">or register instead!</a></div>
                 </li>
             </ul>
             </li>

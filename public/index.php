@@ -45,8 +45,15 @@ $BODY=<<<EOB
     <ul id="gamelist"> </ul>
 EOB;
 } else {
-$BODY="Weeee";
+$BODY=<<<EOB
+Weeee! <br>This is a project for the Web Engineering course at DHBW Stuttgart 2013. The goal was to implement the game Captain's Mistress using only php, javascript with jQuery and a MySQL database. The current version is hosted at http://viergewinnt.foyfoy.de/.
+<hr>
+
+Dies ist ein Projekt für den Web-Engineering-Kurs an der DHBW Stuttgart 2013. Das Ziel war es, das Spiel "Vier gewinnt" mithilfe von php, javascript mit jQuery und einer MySQL-Datenbank zu implementieren.
+
+EOB;
 }
 include('../lib/template/base.php');
+
 ?>
 
