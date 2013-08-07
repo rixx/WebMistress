@@ -19,7 +19,6 @@
     mysql_close();
 
     $HEAD= <<<EOD
-
     <script>
         gameState = {$row['spielfeld']};
     

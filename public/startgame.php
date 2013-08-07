@@ -10,6 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $gamename = htmlentities($_POST['name']);
 
+    if (strlen($gamename) < 3) {
+        echo "Sorry, your chosen game name seems to be too short.";
+    } else {
     // gets the selected color combination
     $colors = explode("_",$_POST['colors']);
 
@@ -39,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $BODY=<<<EOB
     
-    <form action="startgame.php" method="post">
+   <form action="startgame.php" method="post">
         Game name: <input type="text" name="name" /><br />
         Color combination: 
         <select name="colors">

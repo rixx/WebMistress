@@ -1,5 +1,6 @@
 <?php
-if (isset($_SESSION['uid'])) {
+session_start();
+if(isset($_SESSION['login']) && $_SESSION['login']) {
     include('../lib/connectDB.php');
     
     // Get the playername
@@ -48,3 +49,4 @@ $BODY="Weeee";
 }
 include('../lib/template/base.php');
 ?>
+
