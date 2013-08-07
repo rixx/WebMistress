@@ -38,7 +38,7 @@ Let's try a structured approach here, by directory.
 
 `pollEnemy` returns the second player in the current player's game as a json.
 
-`pollGameList` returns all running games as text/html, formatted as <li>$gamename ($playername)</li>.
+`pollGameList` returns all running games as text/html, formatted as `<li>$gamename ($playername)</li>`.
 
 `pollGame` returns the game board, the status and whose turn it is as json.
 
