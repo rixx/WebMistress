@@ -10,10 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include('../lib/connectDB.php');
 
     if (strlen($username) < 3 || strlen($password) < 3) {
-        $errorPage = "Username or Password too short.";
+        $errorMessage = "Username or Password too short.";
     // check if passwords are ok
     } else if ($password != $password2) {
-        $errorMessage = "passwords do not match";
+        $errorMessage = "Passwords do not match.";
     } else {
 
         // check if the nick is already taken        
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row = mysql_fetch_assoc($result);
 
         if ($row) {
-            $errorMessage = "please choose a different username";
+            $errorMessage = "Please choose a different Username.";
         } else {
 
             $hashed_pw = crypt($password,'$6$rounds=5000$'.$username.'DHBW2013wasfuereinspass$');
@@ -36,14 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               mysql_real_escape_string($mail));
             mysql_query($query);
 
-            $successMessage = "Success! Wooo! Click <a href=\"/login.php\">here</a> to log in!";
+            $successMessage = "Success! Wooo! Click <a href=\"/login.php\" class=\"alert-link\">here</a> to log in!";
         }
     }
 }
 $BODY;
-if ($errorMessage) {
+if (isset($errorMessage)) {
     $BODY = "<div class=\"alert alert-danger\">".$errorMessage."</div>";
-} else if ($successMessage) {
+} else if (isset($successMessage)) {
     $BODY = "<div class=\"alert alert-success\">".$successMessage."</div>";
 }
 $BODY .=<<<EOB
