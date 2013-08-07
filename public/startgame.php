@@ -8,6 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $gamename = htmlentities($_POST['name']);
 
+    if (strlen($gamename) < 3) {
+        echo "Sorry, your chosen game name seems to be too short.";
+    } else {
     // gets the selected color combination
     $colors = explode("_",$_POST['colors']);
 
@@ -23,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['gameid'] = mysql_insert_id();
 
     header('Location: game.php');
+    }
 }
 ?>
 
