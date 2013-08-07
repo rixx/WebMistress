@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['gameid'] = mysql_insert_id();
 
     header('Location: game.php');
+    }
 } else {
     $query = sprintf("SELECT name
                       FROM player
