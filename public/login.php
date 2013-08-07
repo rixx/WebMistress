@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // check if user exists
     if (!$row) {
-        echo "Sorry, ".$username.", there seems to be an error with your authentication.";
+        errorpage($username);
     } else {
 
         $hashed_pw = crypt($password,'$6$rounds=5000$'.$username.'DHBW2013wasfuereinspass$');
@@ -31,23 +31,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header('Location: index.php');
             mysql_close($link);
         } else {
-            echo "Sorry, ".$username.", there seems to be an error with your authentication.";
+            errorpage($username);
         }
     }
 }
+function errorpage($username) {
+$BODY=<<<EOB
+Sorry, {$username}, there seems to be an error with your authentication.</p>
+<form class="login form" action="login.php" method="post">
+    <div class="form-group">
+        <label class="col-lg-1 control-label">
+            Nickname: 
+        </label>
+        <div class="col-lg-11">
+            <div class="col-lg-3"><input class="form-control" type="text" name="nick" /></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-1 control-label">
+            Passwort: 
+        </label>
+        
+        <div class="col-lg-11">
+            <div class="col-lg-3"><input class="form-control" type="password" name="pwd" /></div>
+        </div>
+    </div>
+    <div class="form-group"> 
+        <div class="col-lg-11 col-lg-offset-1">
+        <div class="col-lg-3"><input class="btn btn-primary btn-lg btn-block" type="submit" value="Login" /></div>
+        </div>
+    </div>
+</form>
+EOB;
+include('../lib/template/base.php');
+}
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Vier Gewinnt - Login</title>
-    <link rel="stylesheet" href="/styles/style.css" />
-</head>
-<body>
-    <form class="login" action="login.php" method="post">
-        <label>Nickname: </label><input type="text" name="nick" /><br />
-        <label>Passwort: </label><input type="password" name="pwd" /><br />
-        <input type="submit" value="Login" />
-    </form>
-</body>
-</html>
 

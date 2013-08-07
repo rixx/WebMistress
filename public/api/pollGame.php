@@ -1,8 +1,8 @@
 <?php header('Content-Type: application/json');?>
-<?php include('auth.php'); ?>
+<?php include('../../lib/auth.php'); ?>
 <?php
 
-include('connectDB.php');
+include('../../lib/connectDB.php');
 
 // get relevant data about the current game
 $query = sprintf("SELECT spielfeld, finished, turn 

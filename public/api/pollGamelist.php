@@ -1,8 +1,8 @@
 <?php header('Content-Type: text/html');?>
-<?php include('auth.php'); ?>
+<?php include('../../lib/auth.php'); ?>
 <?php
 
-include('connectDB.php');
+include('../../lib/connectDB.php');
 
 // get list of all games with only one player
 $query = sprintf("SELECT game.id, game.name AS gamename, player.name AS player1name
