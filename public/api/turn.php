@@ -1,15 +1,12 @@
-<?php header('Content-Type: application/json');?>
-
-<?php
-
-session_start();
+<?php 
+header('Content-Type: application/json');
 include('../lib/auth.php');
 include('../lib/connectDB.php');
 
 // find out everything about the current game
 $query = sprintf("SELECT player1, player2, spielfeld, finished, turn
                   FROM game 
-                  WHERE game.id='%s'",
+                  WHERE game.id=%d",
                   $_SESSION['gameid']);
 $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);
@@ -27,17 +24,14 @@ if ($row['finished'] == 'true') {
 
     $spielfeld = json_decode($row['spielfeld']);
     $column = (int)$_GET['column'];
-    $i = 5;
 
     // find the right row for the new element 
-    while ($i >= 0) {
+    for ($i = 5; $i >= 0; $i--) {
 
         if (0 == (int)$spielfeld[$i][$column]) {
             break;
         } 
-        $i--;
     }
-
 
     if ($i < 0) {
         echo '{"error": "Column is full"}';
@@ -57,7 +51,7 @@ if ($row['finished'] == 'true') {
         // insert the new board configuration and turn
         $query = sprintf("UPDATE game 
                           SET spielfeld = '%s', turn='%s' 
-                          WHERE id='%s'", 
+                          WHERE id=%d", 
                           json_encode($spielfeld), $turn, $_SESSION['gameid']);
         mysql_query($query);
 
@@ -98,7 +92,7 @@ function test_vertical($spielfeld, $column, $row) {
                 $vertical++;
                 $j++;
             } else {
-                $vertical = 0;
+                break;
             }
         }
 
@@ -218,7 +212,7 @@ function win() {
 
     $query = sprintf("UPDATE game 
                       SET finished='true' 
-                      WHERE id='%s'",
+                      WHERE id=%d",
                       $_SESSION['gameid']);
     mysql_query($query);
 
@@ -226,13 +220,13 @@ function win() {
 
     $query = sprintf("UPDATE player
                       SET won = won + 1, played = played + 1
-                      WHERE id='%s'",
+                      WHERE id=%d",
                       ($whoami == '1') ? $player1 : $player2);
     mysql_query($query);
 
     $query = sprintf("UPDATE player
                       SET played = played + 1
-                      WHERE id='%s'",
+                      WHERE id=%d",
                       ($whoami == '1') ? $player2 : $player1);
     mysql_query($query);
 }

@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $query = sprintf("SELECT id 
                           FROM user 
                           WHERE name='%s'", 
-                          $username);
+                          mysql_real_escape_string($username));
         $result = mysql_query($query);
         $row = mysql_fetch_assoc($result);
 

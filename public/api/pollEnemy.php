@@ -8,7 +8,7 @@ include('../../lib/connectDB.php');
 $query = sprintf("SELECT game.player2, player.name 
                   FROM game 
                       LEFT JOIN player ON game.player2=player.id
-                  WHERE game.id='%s'", 
+                  WHERE game.id=%d", 
                   $_SESSION['gameid']);
 $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);

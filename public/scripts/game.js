@@ -147,7 +147,7 @@ $(function() {
             var offX  = (e.offsetX || e.clientX - $(e.target).offset().left);
             var col = Math.floor(offX / cellWidth);
 
-            $.get('turn.php', {column: col}, function(data){
+            $.get('/api/turn.php', {column: col}, function(data){
                 updateStuff(data); 
             });
     });

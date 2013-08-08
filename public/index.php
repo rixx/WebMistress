@@ -6,7 +6,7 @@ if(isset($_SESSION['login']) && $_SESSION['login']) {
     // Get the playername
     $query = sprintf("SELECT name, played, won
                       FROM player
-                      WHERE id='%s'",
+                      WHERE id=%d",
                       $_SESSION['uid']);
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);
@@ -19,7 +19,7 @@ if(isset($_SESSION['login']) && $_SESSION['login']) {
     $query = sprintf("SELECT id 
                       FROM game 
                       WHERE game.finished='false' 
-                          AND (player1='%s' or player2='%s')",
+                          AND (player1=%d or player2=%d)",
                       $_SESSION['uid'], $_SESSION['uid']);
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);
@@ -27,7 +27,9 @@ if(isset($_SESSION['login']) && $_SESSION['login']) {
     // If there is such a game, redirect
     if ($row) {
        $_SESSION['gameid'] = $row['id'];
+       header("HTTP/1.1 303 See Other");
        header('Location: game.php');
+       exit;
     } 
 
 

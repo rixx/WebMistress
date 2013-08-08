@@ -6,7 +6,7 @@
                       FROM game 
                           LEFT JOIN player p1 ON game.player1 = p1.id 
                           LEFT JOIN player p2 ON game.player2 = p2.id
-                      WHERE game.id='%s'",
+                      WHERE game.id=%d",
                       $_SESSION['gameid']);
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);

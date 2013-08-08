@@ -14,7 +14,7 @@ How is it structured?
 
 Obviously, the documentation can be found in `doc`. 
 
-Files in `lib` do not need to be accessed from the outside (instead they are included in other php scripts). `lib/template` contians `base.php`, the currently only template in this project.
+Files in `lib` do not need to be accessed from the outside (instead they are included in other php scripts). `lib/template` contains `base.php`, the currently only template in this project.
 
 Files in `public` are available to external access. `public/api` contains php scripts that are polled. `public/scripts` contains .js files, most notably `jquery.js` and `bootstrap.js`. `public/styles` contains .css files. The remaining files in `public` form the core of the application.
 

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<meta charset='utf-8'>
 <html>
 <head>
     <link rel="stylesheet" href="/styles/style.css">
