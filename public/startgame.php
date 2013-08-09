@@ -40,19 +40,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 $BODY=<<<EOB
-    
-   <form action="startgame.php" method="post">
-        Game name: <input type="text" name="name" /><br />
-        Color combination: 
-        <select name="colors">
+<form class="startgame form-horizontal" action="startgame.php" method="post">
+    <div class="form-group">
+        <label class="col-lg-1 control-label">
+            Game Name: 
+        </label>
+        <div class="col-lg-11">
+            <div class="col-lg-3"><input class="form-control" type="text" name="name" /></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-1 control-label">
+        </label>
+        
+        <div class="col-lg-11">
+            <div class="col-lg-3"><select class="form-control" name="colors" /></div>
             <option value="red_yellow" selected>Red/Yellow</option>
             <option value="red_black">Red/Black</option>
             <option value="grey_black">Grey/Black</option>
             <option value="black_grey">Black/Grey</option>
-        </select>
-        <input type="submit" value="Start" />
-    </form>
+        </div>
+    </div>
+    <div class="form-group"> 
+        <div class="col-lg-11 col-lg-offset-1">
+        <div class="col-lg-3"><input class="btn btn-primary btn-lg btn-block" type="submit" value="Start" /></div>
+        </div>
+    </div>
+</form>
 EOB;
-
 include('../lib/template/base.php');
 ?>
