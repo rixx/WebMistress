@@ -37,6 +37,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             mysql_query($query);
 
             $successMessage = "Success! Wooo! Click <a href=\"/login.php\" class=\"alert-link\">here</a> to log in!";
+
+            $query = sprintf("SELECT name
+                              FROM player
+                              WHERE mail='%s'",
+                              $mail);
+            $result = mysql_query($query);
+            $account_count = mysql_num_rows($result) + 1;
+
+            $message = wordwrap("Hi, ".$username.",\r\nit appears that you have just registered an account (number ".$account_count.") at viergewinnt.foyfoy.de. We wish to welcome you and hope that you'll find everything to your liking. Do not hesitate to contact us with any problems or questions you might have.", 70, "\r\n");
+            mail($mail, 'Welcome to Viergewinnt!', $message); 
         }
     }
 }
