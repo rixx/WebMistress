@@ -52,6 +52,7 @@ $BODY=<<<EOB
 
     <div class="form-group">
         <label class="col-lg-1 control-label">
+            Color:
         </label>
         
         <div class="col-lg-11">
