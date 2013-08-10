@@ -1,11 +1,17 @@
 <?php
-$link = mysql_connect('127.0.0.1', 'rix', 'blakeks');
+
+$host = 'localhost';
+$user = 'rix';
+$pass = 'blakeks';
+$db_name = 'viergewinnt';
+
+$link = mysql_connect($host, $user, $pass);
 
 if (!$link) {
     die('Verbindung schlug fehl: ' . mysql_error());
 }
 
-$db = mysql_select_db("viergewinnt",$link);
+$db = mysql_select_db($db_name, $link);
 
 ?>
 
