@@ -85,7 +85,7 @@ $(function() {
                     player.addClass('winner');
                     enemy.addClass('loser');
                 }
-                $('#links').html("<a href='viergewinnt.php'>Menu</a>");
+                $('#links').html("<a href='/index.php'>Menu</a>");
                 
             }
         } 

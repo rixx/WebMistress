@@ -1,5 +1,4 @@
 <?php
-
 include('../lib/auth.php');
 include('../lib/connectDB.php');
 include('../lib/exitRemaining.php');
@@ -16,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
         // generates the new game
         $query = sprintf("INSERT INTO game (name, player1, color1, color2) 
-                          VALUES ('%s','%s','%s','%s')",
+                          VALUES ('%s',%d,'%s','%s')",
                           mysql_real_escape_string($gamename), 
                           $_SESSION['uid'],
                           mysql_real_escape_string(htmlentities($colors[0])),

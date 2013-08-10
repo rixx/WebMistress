@@ -11,5 +11,5 @@ $query = sprintf("SELECT spielfeld, finished, turn
 $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);
 
-echo '{"board": '.$row['spielfeld'].', "finished": '.$row['finished']', "turn": '.$row['turn'].'}';
+echo '{"board": '.$row['spielfeld'].', "finished": "'.$row['finished'].'", "turn": '.$row['turn'].'}';
 ?>

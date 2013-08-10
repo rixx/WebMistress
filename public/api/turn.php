@@ -1,12 +1,12 @@
 <?php 
 header('Content-Type: application/json');
-include('../lib/auth.php');
-include('../lib/connectDB.php');
+include('../../lib/auth.php');
+include('../../lib/connectDB.php');
 
 // find out everything about the current game
 $query = sprintf("SELECT player1, player2, spielfeld, finished, turn
                   FROM game 
-                  WHERE game.id=%d",
+                  WHERE id=%d",
                   $_SESSION['gameid']);
 $result = mysql_query($query);
 $row = mysql_fetch_assoc($result);
@@ -14,7 +14,7 @@ $player1 = $row['player1'];
 $player2 = $row['player2'];
 
 // find out if the current player is player 1 or 2
-$whoami = ($_SESSION['uid'] == $row['player1']) ? '1' : '2';
+$whoami = ($_SESSION['uid'] == $row['player1']) ? 1 : 2;
 
 if ($row['finished'] == 'true') {
     echo '{"error": "Game is already over."}';
@@ -221,13 +221,13 @@ function win() {
     $query = sprintf("UPDATE player
                       SET won = won + 1, played = played + 1
                       WHERE id=%d",
-                      ($whoami == '1') ? $player1 : $player2);
+                      ($whoami == 1) ? $player1 : $player2);
     mysql_query($query);
 
     $query = sprintf("UPDATE player
                       SET played = played + 1
                       WHERE id=%d",
-                      ($whoami == '1') ? $player2 : $player1);
+                      ($whoami == 1) ? $player2 : $player1);
     mysql_query($query);
 }
 
