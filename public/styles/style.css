@@ -8,7 +8,7 @@
 }
 
 .playerStatus.winner:after {
-    content: ' hat gewonnen. Blackjack and hookers!';
+    content: ' hat gewonnen. Glückwunsch, gut gemacht!';
 }
 
 .playerStatus.loser:after {
