@@ -13,7 +13,7 @@
 <body>
 
     <div class="navbar">
-        <a class="navbar-brand" href="/viergewinnt.php">Vier Gewinnt</a>
+        <a class="navbar-brand" href="/index.php">Vier Gewinnt</a>
         <ul class="nav navbar-nav pull-right">
             <?php if(!isset($_SESSION['login'])) { ?>
 
